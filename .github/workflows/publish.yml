@@ -1,19 +1,21 @@
-# Name of the workflow
-name: Release
-
-# Run on every commit tag which begins with "v" (e.g., "v0.1.4")
+name: "🚀 NPM Publish"
 on:
    push:
-      tags:
-         - "v*"
-
-# Automatically create a GitHub Release, with release details specified (the relevant commits)
+      branches: [main]
+   pull_request:
+      branches: [main]
 jobs:
    release:
-      name: "Release"
-      runs-on: "ubuntu-latest"
+      runs-on: ubuntu-latest
       steps:
-         - uses: "marvinpinto/action-automatic-releases@latest"
+         - uses: actions/checkout@master
+         - name: Create Archive Release
+           uses: thedoctor0/zip-release@master
            with:
-              repo_token: "${{ secrets.GITHUB_TOKEN }}"
-              prerelease: false
+              filename: "release.zip"
+              exclusions: "*.git*"
+         - name: Upload Release
+           uses: ncipollo/release-action@v1
+           with:
+              artifacts: "release.zip"
+              token: ${{ secrets.GITHUB_TOKEN }}
