@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === "production") {
    console.debug = () => {}
 }
 
-console.log(" ********** Zesty live editor loaded ************ ")
+console.log(" ********** Zesty live editor loaded123 ************ ")
 
 export const main = (content?: any) => {
    if (!helper.canUseDOM()) {
