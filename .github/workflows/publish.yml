@@ -20,6 +20,13 @@ jobs:
            run: npm ci
          - name: 🚀 build
            run: npm run build
+         - name: 🚀 Pre release
+           uses: "marvinpinto/action-automatic-releases@latest"
+           with:
+              repo_token: "${{ secrets.DARWIN_TOKEN }}"
+              automatic_release_tag: "latest"
+              prerelease: true
+              title: "Development Build"
          - name: 🚀 publish
            run: npm publish --access public
            env:
