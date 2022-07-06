@@ -1,31 +1,21 @@
 name: Release
 on:
    push:
-      branches:
-         - main
-
+      branches: [main]
+   pull_request:
+      branches: [main]
 jobs:
-   release:
+   build:
       name: Release
       runs-on: ubuntu-latest
       steps:
-         - name: Checkout repository
+         - name: Checkout
            uses: actions/checkout@v2
            with:
               fetch-depth: 0
-         - name: Automatic GitHub Release
+         - name: Release
            uses: justincy/github-action-npm-release@2.0.2
            id: release
-         - uses: actions/setup-node@v1
-           if: steps.release.outputs.released == 'true'
-           with:
-              registry-url: "https://npm.pkg.github.com"
-         - name: 🚀 ci
-           run: npm install
-         - name: 🚀 build
-           run: npm run build
-         - name: 🚀 publish
-           if: steps.release.outputs.released == 'true'
-           run: npm publish --access public
-           env:
-              NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+         - name: Print release output
+           if: ${{ steps.release.outputs.released == 'true' }}
+           run: echo Release ID ${{ steps.release.outputs.release_id }}
