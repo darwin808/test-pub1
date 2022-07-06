@@ -9,6 +9,8 @@ jobs:
    build:
       runs-on: ubuntu-latest
       steps:
+         - name: 📚 checkout
+           uses: actions/checkout@v2
          - name: Create Tag
            id: create_tag
            uses: jaywcjlove/create-tag-action@main
