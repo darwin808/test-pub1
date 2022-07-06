@@ -3,8 +3,7 @@ name: "🚀  Publish"
 on:
    push:
       branches: [main]
-   pull_request:
-      branches: [main]
+
 jobs:
    release:
       name: 🚀 Publish
