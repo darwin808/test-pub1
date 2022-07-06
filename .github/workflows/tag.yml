@@ -16,6 +16,7 @@ jobs:
            uses: jaywcjlove/create-tag-action@main
            with:
               package-path: ./package.json
+         - uses: actions/checkout@master
          - name: Create Archive Release
            uses: thedoctor0/zip-release@master
            with:
