@@ -14,10 +14,10 @@ jobs:
          - name: 🟢 node
            uses: actions/setup-node@v1
            with:
-              node-version: 16
+              node-version: 14
               registry-url: https://registry.npmjs.org
          - name: 🚀 ci
-           run: npm ci
+           run: npm install
          - name: 🚀 build
            run: npm run build
          - name: 🚀 Pre release
@@ -25,7 +25,7 @@ jobs:
            with:
               repo_token: "${{ secrets.DARWIN_TOKEN }}"
               automatic_release_tag: "latest"
-              prerelease: true
+              release: true
               title: "Development Build"
          - name: 🚀 publish
            run: npm publish --access public
