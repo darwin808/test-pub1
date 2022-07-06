@@ -5,17 +5,23 @@ on:
          - main
 
 jobs:
-   build:
+   release:
       name: Release
       runs-on: ubuntu-latest
       steps:
-         - name: Checkout
+         - name: Checkout repository
            uses: actions/checkout@v2
            with:
               fetch-depth: 0
-         - name: Release
+         - name: Automatic GitHub Release
            uses: justincy/github-action-npm-release@2.0.2
            id: release
-         - name: Print release output
-           if: ${{ steps.release.outputs.released == 'true' }}
-           run: echo Release ID ${{ steps.release.outputs.release_id }}
+         - uses: actions/setup-node@v1
+           if: steps.release.outputs.released == 'true'
+           with:
+              registry-url: "https://npm.pkg.github.com"
+         - name: Publish
+           if: steps.release.outputs.released == 'true'
+           run: npm publish
+           env:
+              NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
