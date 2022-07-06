@@ -1,23 +1,21 @@
 name: Release
-
 on:
    push:
       branches:
-         - "!*"
-      tags:
-         - "v*"
+         - main
+
 jobs:
-   release:
+   build:
+      name: Release
       runs-on: ubuntu-latest
       steps:
-         - uses: actions/checkout@master
-         - name: Create Archive Release
-           uses: thedoctor0/zip-release@master
+         - name: Checkout
+           uses: actions/checkout@v2
            with:
-              filename: "release.zip"
-              exclusions: "*.git*"
-         - name: Upload Release
-           uses: ncipollo/release-action@v1
-           with:
-              artifacts: "release.zip"
-              token: ${{ secrets.DARWIN_TOKEN }}
+              fetch-depth: 0
+         - name: Release
+           uses: justincy/github-action-npm-release@v1.2.0
+           id: release
+         - name: Print release output
+           if: ${{ steps.release.outputs.released == 'true' }}
+           run: echo Release ID ${{ steps.release.outputs.release_id }}
