@@ -20,7 +20,11 @@ jobs:
            if: steps.release.outputs.released == 'true'
            with:
               registry-url: "https://npm.pkg.github.com"
-         - name: Publish
+         - name: 🚀 ci
+           run: npm install
+         - name: 🚀 build
+           run: npm run build
+         - name: 🚀 publish
            if: steps.release.outputs.released == 'true'
            run: npm publish --access=public
            env:
