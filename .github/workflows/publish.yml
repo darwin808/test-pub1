@@ -1,33 +1,19 @@
-name: "🚀 NPM Publish"
+# Name of the workflow
+name: Release
+
+# Run on every commit tag which begins with "v" (e.g., "v0.1.4")
 on:
    push:
-      branches: [main]
-   pull_request:
-      branches: [main]
+      tags:
+         - "v*"
+
+# Automatically create a GitHub Release, with release details specified (the relevant commits)
 jobs:
    release:
-      name: 🚀 publish
-      runs-on: ubuntu-latest
+      name: "Release"
+      runs-on: "ubuntu-latest"
       steps:
-         - name: 📚 checkout
-           uses: actions/checkout@v2
-         - name: 🟢 node
-           uses: actions/setup-node@v1
+         - uses: "marvinpinto/action-automatic-releases@latest"
            with:
-              node-version: 14
-              registry-url: https://registry.npmjs.org
-         - name: 🚀 ci
-           run: npm install
-         - name: 🚀 build
-           run: npm run build
-         - name: 🚀 Pre release
-           uses: "marvinpinto/action-automatic-releases@latest"
-           with:
-              repo_token: "${{ secrets.DARWIN_TOKEN }}"
-              automatic_release_tag: "latest"
+              repo_token: "${{ secrets.GITHUB_TOKEN }}"
               prerelease: false
-              title: "Development Build"
-         - name: 🚀 publish
-           run: npm publish --access public
-           env:
-              NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
