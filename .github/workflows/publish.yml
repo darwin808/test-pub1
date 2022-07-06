@@ -1,9 +1,8 @@
-name: "🚀 NPM Publish"
+name: Release
 on:
    push:
-      branches: [main]
-   pull_request:
-      branches: [main]
+      tags:
+         - "*"
 jobs:
    release:
       runs-on: ubuntu-latest
