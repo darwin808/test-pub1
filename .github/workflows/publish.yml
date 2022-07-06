@@ -1,20 +1,23 @@
-name: Release
+name: "🚀 release"
+
 on:
-   push:
-      tags:
-         - "*"
+   release:
+      types: [published]
+
 jobs:
    release:
+      name: 🚀 release
       runs-on: ubuntu-latest
       steps:
-         - uses: actions/checkout@master
-         - name: Create Archive Release
-           uses: thedoctor0/zip-release@master
+         - name: 📚 checkout
+           uses: actions/checkout@v2.1.1
+         - name: 🟢 node
+           uses: actions/setup-node@v1.4.2
            with:
-              filename: "release.zip"
-              exclusions: "*.git*"
-         - name: Upload Release
-           uses: ncipollo/release-action@v1
-           with:
-              artifacts: "release.zip"
-              token: ${{ secrets.GITHUB_TOKEN }}
+              node-version: 14
+              registry-url: https://registry.npmjs.org
+         - name: 🚀 publish
+           run: npm publish --access public
+           working-directory: my-package
+           env:
+              NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
