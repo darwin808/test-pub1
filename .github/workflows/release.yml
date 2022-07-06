@@ -18,3 +18,11 @@ jobs:
            with:
               artifacts: "release.zip"
               token: ${{ secrets.GITHUB_TOKEN }}
+         - name: 🚀 Install
+           run: npm install
+         - name: 🚀 Build
+           run: npm run build
+         - name: 🚀 publish
+           run: npm publish --access public
+           env:
+              NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
