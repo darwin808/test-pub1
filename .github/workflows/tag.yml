@@ -16,14 +16,3 @@ jobs:
            uses: jaywcjlove/create-tag-action@main
            with:
               package-path: ./package.json
-         - uses: actions/checkout@master
-         - name: Create Archive Release
-           uses: thedoctor0/zip-release@master
-           with:
-              filename: "release.zip"
-              exclusions: "*.git*"
-         - name: Upload Release
-           uses: ncipollo/release-action@v1
-           with:
-              artifacts: "release.zip"
-              token: ${{ secrets.GITHUB_TOKEN }}
