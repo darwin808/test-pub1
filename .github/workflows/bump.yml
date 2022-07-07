@@ -12,8 +12,12 @@ jobs:
            with:
               fetch-depth: 0
          - name: "Automated Version Bump"
-           uses: "phips28/gh-action-bump-version@master"
-           env:
-              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           with:
-              default: prerelease
+           run: npm version patch
+         - name: "Automated Version Bump"
+           run: git add .
+
+         - name: "Automated Version Bump"
+           run: git commit -m 'bump'
+
+         - name: "Automated Version Bump"
+           run: git push
