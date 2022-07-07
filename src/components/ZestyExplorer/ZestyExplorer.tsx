@@ -19,6 +19,7 @@ import { JsonData, ZestyExplorerProps } from "types"
 
 // Main ZESTY EXPLORER
 export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
+   console.log(content, "cc:::")
    const [domain, setdomain] = React.useState("")
    const [jsonUrl, setjsonUrl] = React.useState(helper.getJsonUrl(domain))
    const [jsonData, setJsonData] = React.useState<JsonData>({
