@@ -14,6 +14,7 @@ import * as helper from "utils/index"
 console.log(" ********** Zesty live editor loaded123 ************ ")
 
 export const ZestyLiveEditor = (content?: any) => {
+   console.log(content, "cc0:::")
    if (!helper.canUseDOM()) {
       return null
    }
