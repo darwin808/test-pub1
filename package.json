@@ -1,6 +1,6 @@
 {
    "name": "@darwin808/live-editor",
-   "version": "0.0.44",
+   "version": "0.0.45",
    "description": "",
    "main": "./dist/live-editor.production.js",
    "scripts": {
