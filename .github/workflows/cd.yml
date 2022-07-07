@@ -19,14 +19,11 @@ jobs:
               git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
               git config user.name "$GITHUB_ACTOR"
 
-         - name: "Automated Version Bump"
-           run: npm version patch
-
          - name: Update & Push
            env:
               GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
            run: |
-              printf "Updated on \n$(date)" >> README.md
+              npm version patch
               git add .
               git commit -m "bump version "
               git push origin version-branch:main
