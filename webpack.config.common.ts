@@ -94,6 +94,7 @@ const config: Configuration = {
       library: "Live-editor",
       libraryTarget: "umd",
       publicPath: "",
+      globalObject: "this",
    },
    performance: {
       hints: false,
