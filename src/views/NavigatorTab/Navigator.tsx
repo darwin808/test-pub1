@@ -50,7 +50,7 @@ export const NavigatorTab = ({ content, theme, response, token, setloading }: Pr
    const result = fuse.search(search)
 
    React.useEffect(() => {
-      data.length === 0 && fetchJsonData()
+      data?.length === 0 && fetchJsonData()
    }, [data])
 
    return (
