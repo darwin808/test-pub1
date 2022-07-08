@@ -23,6 +23,7 @@ export const NavigatorTab = ({ content, theme, response, token, setloading }: Pr
    const [search, setsearch] = React.useState("")
 
    console.log(content, "content:::::")
+   console.log(content.navigationTree, "content:::::")
    const handleJsonData = (data: any) => {
       setdata(data)
    }
