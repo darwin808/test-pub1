@@ -38,8 +38,23 @@ jobs:
            if: ${{ steps.release.outputs.released == 'true' }}
            run: echo Release ID ${{ steps.release.outputs.release_id }}
 
-         # Publish to NPM
-         - name: 🟢 Publish Npm
+         #  publish to npm
+         - name: 🟢 Checkout Repo
+           uses: actions/setup-node@v1
+           with:
+              node-version: "14.x"
+              registry-url: https://registry.npmjs.org
+         - name: 🚀 ci
+           run: npm ci
+         - name: 🚀 build
+           run: npm run build
+         - name: 🚀 Publish to NPM
+           run: npm publish --access public
+           env:
+              NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
+
+         #  publish to github
+         - name: 🟢 Publish to Github
            uses: actions/setup-node@v1
            with:
               node-version: "14.x"
@@ -48,7 +63,7 @@ jobs:
            run: npm ci
          - name: 🚀 build
            run: npm run build
-         - name: 🚀 publish
+         - name: 🚀 publish to Github
            run: npm publish --access public
            env:
               NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
