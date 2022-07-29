@@ -20,6 +20,7 @@
       "clear-dist": "find dist ! -name 'live-editor.production.js' -type f -exec rm -f {} +",
       "watch": "webpack --watch  --mode=production --config=webpack.config.common.ts ",
       "test": "jest",
+      "prepare:dev": "chmod ug+x .husky/*",
       "test-dev": "jest --watch --silent"
    },
    "keywords": [
