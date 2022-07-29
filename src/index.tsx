@@ -11,7 +11,7 @@ import { render } from "react-dom"
 //    console.debug = () => {}
 // }
 
-console.log(" ********** Zesty live editor loaded v1 ************ ")
+console.log(" 123********** Zesty live editor loaded v1 ************ ")
 
 export const ZestyLiveEditor = (content?: any) => {
    if (!helper.canUseDOM()) {
