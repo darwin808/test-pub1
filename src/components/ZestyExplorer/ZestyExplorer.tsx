@@ -36,12 +36,22 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
    const [response, setResponse] = React.useState<any>("")
    const [themeMode, themeToggler, mountedComponent] = useDarkMode()
    const [loading, setloading] = React.useState(false)
-   const isContentAvailable = Object.keys(content).length !== 0 ? true : false
+   const [isContentAvailable, setisContentAvailable] = React.useState(false)
+
+   // const isContentAvailable = Object.keys(content).length !== 0 ? true : false
    // const token = localToken || secretKey || helper.getUserAppSID()
    const handleJSONData = (res: JsonData) => {
       setJsonData(res)
       setloading(false)
    }
+
+   React.useEffect(() => {
+      if (Object.keys(content).length !== 0) {
+         setisContentAvailable(true)
+      } else {
+         setisContentAvailable(false)
+      }
+   }, [content])
 
    // get json data
    const fetchJsonData = async () => {
@@ -129,7 +139,6 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
    }
 
    if (
-      !isContentAvailable ||
       jsonData?.error ||
       pageData?.error ||
       jsonData?.data === null ||
@@ -147,7 +156,7 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
    }
 
    console.log(
-      !isContentAvailable,
+      isContentAvailable,
       jsonData?.error,
       pageData?.error,
       jsonData?.data === null,
