@@ -38,7 +38,6 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
    const [loading, setloading] = React.useState(false)
    const isContentAvailable = Object.keys(content).length !== 0 ? true : false
    // const token = localToken || secretKey || helper.getUserAppSID()
-   console.log(isContentAvailable, themeMode, mountedComponent, "23:::::")
    const handleJSONData = (res: JsonData) => {
       setJsonData(res)
       setloading(false)
@@ -145,6 +144,7 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
       )
    }
 
+   console.log(isContentAvailable, jsonData, themeMode, mountedComponent, "23:::::")
    return (
       <Box id={"zestyExplorer"} data-testid="zestyExplorerMain" sx={zestyWrapper}>
          <Helmet>
