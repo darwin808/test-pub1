@@ -36,9 +36,9 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
    const [response, setResponse] = React.useState<any>("")
    const [themeMode, themeToggler, mountedComponent] = useDarkMode()
    const [loading, setloading] = React.useState(false)
-   console.log(themeMode, mountedComponent)
    const isContentAvailable = Object.keys(content).length !== 0 ? true : false
    // const token = localToken || secretKey || helper.getUserAppSID()
+   console.log(isContentAvailable, themeMode, mountedComponent, "23:::::")
    const handleJSONData = (res: JsonData) => {
       setJsonData(res)
       setloading(false)
