@@ -128,6 +128,7 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
       )
    }
    if (
+      !isContentAvailable ||
       jsonData?.error ||
       pageData?.error ||
       jsonData?.data === null ||
