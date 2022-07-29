@@ -144,7 +144,14 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
       )
    }
 
-   console.log(isContentAvailable, jsonData, themeMode, mountedComponent, "23:::::")
+   console.log(
+      isContentAvailable,
+      jsonData,
+      pageData,
+      themeMode,
+      mountedComponent,
+      "23:::::",
+   )
    return (
       <Box id={"zestyExplorer"} data-testid="zestyExplorerMain" sx={zestyWrapper}>
          <Helmet>
