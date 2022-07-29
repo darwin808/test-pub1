@@ -17,18 +17,8 @@ import {
 import { useTheme } from "@mui/material/styles"
 import { LoginPrompt } from "components/Ui"
 import { NewLoader } from "components/Loader/NewLoader"
-import { JsonData } from "types"
+import { ZestyExplorerBrowserProps } from "types"
 
-interface Props {
-   pageData: any
-   response: any
-   children: any
-   jsonData: JsonData
-   getData: any
-   token: string | undefined
-   settoken: (e: string | undefined) => void
-   isLocalContent: boolean
-}
 export const ZestyExplorerBrowser = ({
    pageData,
    response,
@@ -38,9 +28,8 @@ export const ZestyExplorerBrowser = ({
    token,
    settoken,
    isLocalContent,
-}: Props) => {
+}: ZestyExplorerBrowserProps) => {
    const theme = useTheme()
-   const [localLoading, setlocalLoading] = React.useState(false)
    const [localLogin, setlocalLogin] = React.useState(false)
    const [modal, setmodal] = React.useState(false)
    const content = pageData
@@ -68,7 +57,7 @@ export const ZestyExplorerBrowser = ({
 
    // get the instance view models  on initial load
    const { loading, verifyFailed, verifySuccess, instances, views, models } =
-      useFetchWrapper(userAppSID, instanceZUID)
+      useFetchWrapper(userAppSID, instanceZUID, isLocalContent)
 
    const url = `https://${instanceZUID}.api.zesty.io/v1/content/models/${modelZUID}/items/${itemZUID}`
 
@@ -84,7 +73,9 @@ export const ZestyExplorerBrowser = ({
    }, [instances, models, views, jsonData])
 
    React.useEffect(() => {
-      getFinalData()
+      if (!isLocalContent) {
+         getFinalData()
+      }
    }, [url, token])
 
    // for loading of tabs
@@ -143,6 +134,7 @@ export const ZestyExplorerBrowser = ({
       getData,
       createHeadtagModal: () => setmodal(true),
       setloading: () => settime(2),
+      isLocalContent,
    }
 
    const JSONProps = {
@@ -164,6 +156,7 @@ export const ZestyExplorerBrowser = ({
       scrollPos: currentScroll,
       scrollEvent,
       response,
+      isLocalContent,
    }
 
    const HealthTabProps = {
@@ -183,11 +176,7 @@ export const ZestyExplorerBrowser = ({
    if (localLogin) {
       return (
          <Box sx={containerStyle}>
-            <LocalAuthForm
-               settoken={settoken}
-               setloading={setlocalLoading}
-               setlocalLogin={setlocalLogin}
-            />
+            <LocalAuthForm settoken={settoken} setlocalLogin={setlocalLogin} />
          </Box>
       )
    }
@@ -210,8 +199,6 @@ export const ZestyExplorerBrowser = ({
       )
    }
 
-   console.log(pageData, "page:::")
-
    const switchView = (name: string | null) => {
       switch (name) {
          case "Edit":
@@ -228,7 +215,7 @@ export const ZestyExplorerBrowser = ({
             return <JsonDataViewerTab {...JSONProps} />
          default:
             return !token ? (
-               <NavigatorTab {...NavigatorProps} />
+               <CodeHelperTab {...CodeHelperProps} />
             ) : (
                <EditTab {...EditProps} />
             )
@@ -238,7 +225,7 @@ export const ZestyExplorerBrowser = ({
       <Box sx={containerStyle}>
          <Headers {...HeaderProps}>{children}</Headers>
          <Box sx={{ position: "" }}>
-            {(time > 0 || localLoading) && <NewLoader />}
+            {time > 0 && <NewLoader />}
             {switchView(currentTab)}
          </Box>
       </Box>

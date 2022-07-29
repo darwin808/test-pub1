@@ -6,17 +6,21 @@ import CardContent from "@mui/material/CardContent"
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography"
 import { TextField } from "@mui/material"
-import { assets } from "constants"
+import { assets, baseUrls } from "constants/index"
 import Cookies from "js-cookie"
+import { NewLoader } from "components/Loader"
+import { containerStyle } from "components/ZestyExplorer/styles"
+import { authApi } from "services"
 
 interface Props {
    setlocalLogin: (e: boolean) => void
-   setloading: (e: boolean) => void
    settoken: (e: string | undefined) => void
 }
-export const LocalAuthForm = ({ setlocalLogin, settoken, setloading }: Props) => {
+export const LocalAuthForm = ({ setlocalLogin, settoken }: Props) => {
+   const [loading, setloading] = useState(false)
    const [email, setemail] = useState("")
    const [password, setpassword] = useState("")
+   const [error, seterror] = useState("")
    const handleSuccess = (data: any) => {
       Cookies.set("LOCAL_APP_SID", data.meta.token)
       settoken(data.meta.token)
@@ -26,32 +30,33 @@ export const LocalAuthForm = ({ setlocalLogin, settoken, setloading }: Props) =>
    const handleError = (error: any) => {
       setloading(false)
       console.log(error, "error::")
-      setlocalLogin(false)
+      seterror(error?.message)
+      // setlocalLogin(false)
    }
 
-   const postdata = async () => {
+   const url = baseUrls.auth + "/login"
+
+   const body = new FormData()
+   body.append("email", email)
+   body.append("password", password)
+
+   const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault()
       setloading(true)
-      const formData = new FormData()
-      formData.append("email", email)
-      formData.append("password", password)
-      const headers = {
-         "x-www-form-urlencoded": "application/json",
-      }
-      const rawResponse = await fetch("https://auth.api.zesty.io/login", {
-         method: "POST",
-         mode: "cors",
-         referrerPolicy: "no-referrer",
-         credentials: "omit",
-         headers,
-         body: formData,
-      })
-      const res = await rawResponse.json()
-      res.code === 200 && handleSuccess(res)
-      res.code !== 200 && handleError(res)
+      await authApi({ body, url, handleSuccess, handleError })
    }
 
    const card = (
-      <React.Fragment>
+      <form
+         action="submit"
+         onSubmit={handleSubmit}
+         style={{
+            position: "absolute",
+            top: "40%",
+            left: "50%",
+            transform: "translate(-50%,-60%)",
+         }}
+      >
          <CardContent>
             <Box
                paddingTop={1}
@@ -68,14 +73,14 @@ export const LocalAuthForm = ({ setlocalLogin, settoken, setloading }: Props) =>
                <img
                   src={assets.zestyLogo}
                   alt="Zesty Explorer"
-                  width={"50"}
-                  height={"50"}
+                  width={"100"}
+                  height={"100"}
                />
                <img
                   src={assets.zestyName}
                   alt="Zesty Explorer"
-                  width={"100"}
-                  height={"100"}
+                  width={"150"}
+                  height={"150"}
                />
             </Box>
             <Typography color="text.secondary" gutterBottom sx={{ fontSize: "18px" }}>
@@ -103,12 +108,13 @@ export const LocalAuthForm = ({ setlocalLogin, settoken, setloading }: Props) =>
          </CardContent>
          <CardActions>
             <Button
+               type={"submit"}
                size="small"
                variant="contained"
-               onClick={postdata}
+               onClick={handleSubmit}
                sx={{ fontSize: "14px" }}
             >
-               Save
+               Login
             </Button>
             <Button
                size="small"
@@ -120,8 +126,84 @@ export const LocalAuthForm = ({ setlocalLogin, settoken, setloading }: Props) =>
                Close
             </Button>
          </CardActions>
-      </React.Fragment>
+      </form>
    )
+
+   const cardError = (
+      <Box
+         style={{
+            position: "absolute",
+            top: "40%",
+            left: "50%",
+            transform: "translate(-50%,-60%)",
+         }}
+      >
+         <CardContent>
+            <Box
+               paddingTop={1}
+               sx={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyItems: "center",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: ".5rem",
+               }}
+            >
+               <img
+                  src={assets.zestyLogo}
+                  alt="Zesty Explorer"
+                  width={"100"}
+                  height={"100"}
+               />
+               <img
+                  src={assets.zestyName}
+                  alt="Zesty Explorer"
+                  width={"150"}
+                  height={"150"}
+               />
+            </Box>
+            <Typography color="text.secondary" gutterBottom sx={{ fontSize: "18px" }}>
+               {error}
+            </Typography>
+         </CardContent>
+         <CardActions
+            sx={{
+               display: "flex",
+               justifyContent: "center",
+               justifyItems: "center",
+               width: "100%",
+            }}
+         >
+            <Button
+               type={"submit"}
+               size="small"
+               variant="contained"
+               onClick={() => {
+                  setlocalLogin(false)
+                  seterror("")
+               }}
+               sx={{ fontSize: "14px" }}
+            >
+               Ok
+            </Button>
+         </CardActions>
+      </Box>
+   )
+
+   if (error?.length > 0) {
+      return <Box sx={containerStyle}>{cardError}</Box>
+   }
+
+   if (loading) {
+      return (
+         <Box sx={containerStyle}>
+            <NewLoader />
+         </Box>
+      )
+   }
+
    return (
       <Box sx={{ minWidth: 275 }}>
          <Card variant="outlined">{card}</Card>

@@ -6,19 +6,25 @@
 <h1 align="center"> Zesty.io Live Editor </h1>
 <p align="center">
 Website/App Overlay Guide for Editing Zesty.io Content
+
 <p>
+<div align="center">
 
-## Overview
+![npm](https://img.shields.io/npm/dt/@zesty-io/live-editor?label=NPM%20Downloads&style=flat-square)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/zesty-io/live-editor?style=flat-square)
+![GitHub issues](https://img.shields.io/github/issues/zesty-io/live-editor?style=flat-square)
+![Chrome Web Store](https://img.shields.io/chrome-web-store/rating/mnkmogppmhhmafgfljgckpkapodofjob?label=Chrome%20Web%20Store%20Rating&style=flat-square)
+![GitHub package.json dependency version (prod)](https://img.shields.io/github/package-json/dependency-version/zesty-io/live-editor/react?style=flat-square)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=flat-square&logo=typescript&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=flat-square&logo=mui&logoColor=white)
+![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=flat-square&logo=webpack&logoColor=black)
+![NPM](https://img.shields.io/npm/l/@zesty-io/live-editor?style=flat-square)
 
-Is that the explorer will be a website overlay tool that will guide the user around the data that loads on the page relative to the zesty content management system. The tool will have tabs for searchable on page data, full site navigation, inline editing, website and page health, metadata explorer, image optimization scanning, broken link scanning.
+</div>
 
-## How to Implement
+# ⚡ Installing
 
-The tool should be built in compiled JavaScript and execute in plain JavaScript so it can run over any installation of zesty, whether it's parsley templating, next js, nuxt, or any custom build.
-
-## Distribution
-
-It should be distributed over npm package manager and yarn, it should also be able to be manually installed from a CDN link.
+Requires `node version ^16.x.x`
 
 Using NPM
 
@@ -26,32 +32,13 @@ Using NPM
 npm install @zesty-io/live-editor
 ```
 
-# React
+Using Yarn
 
 ```jsx
-import { ZestyLiveEditor } from "@zesty-io/live-editor"
-
-React.useEffect(() => {
-   ZestyLiveEditor(data)
-}, [])
+yarn add  @zesty-io/live-editor
 ```
 
-# Next JS
-
-```jsx
-const someFunction = async (content) => {
-   const { ZestyLiveEditor } = await import("@zesty-io/live-editor")
-   ZestyLiveEditor(content)
-}
-
-React.useEffect(() => {
-   someFunction(content)
-}, [])
-```
-
-Using CDN
-
--  copy the script tag below and paste it in the head of your main.html file
+Using jsDelivr CDN
 
 ```jsx
 <script
@@ -67,7 +54,64 @@ Note, if your website has a strict content security policy or x-frame-options, y
 https://cdn.jsdelivr.net/gh/zesty-io/live-editor@latest/dist/live-editor.production.js
 ```
 
-# Publishing to NPM
+# ✨ Quickstart
+
+Using React, place this code in your app.js or app loading file
+
+```jsx
+import { ZestyLiveEditor } from "@zesty-io/live-editor"
+
+React.useEffect(() => {
+   ZestyLiveEditor(data)
+}, [])
+```
+
+Using Nextjs, place this in `ZestyView.js`, or for custom builds, `_document.js` or `_app.js`
+
+```jsx
+// outside the component near imports
+const initLiveEditor = async (data) => {
+   const { ZestyLiveEditor } = await import("@zesty-io/live-editor")
+   ZestyLiveEditor(data)
+}
+
+// inside the component's function just before the return statement
+React.useEffect(() => {
+   initLiveEditor(props.content)
+}, [])
+```
+
+Using Vuejs
+
+```html
+<script>
+
+   import { ZestyLiveEditor } from "@zesty-io/live-editor"
+
+    methods:{
+        initLiveEditor: function(data) {
+            ZestyLiveEditor(data)
+        }
+    },
+    beforeMount(){
+       this.initLiveEditor(data)
+    },
+</script>
+```
+
+## 💡 Overview
+
+Is that the explorer will be a website overlay tool that will guide the user around the data that loads on the page relative to the zesty content management system. The tool will have tabs for searchable on page data, full site navigation, inline editing, website and page health, metadata explorer, image optimization scanning, broken link scanning.
+
+## 💡How to Implement
+
+The tool should be built in compiled JavaScript and execute in plain JavaScript so it can run over any installation of zesty, whether it's parsley templating, next js, nuxt, or any custom build.
+
+## Distribution
+
+It should be distributed over npm package manager and yarn, it should also be able to be manually installed from a CDN link.
+
+## Publishing to NPM
 
 -  Manually: `npm run manual-publish`
 -  Github flow: any merge to main will run a release and publish flow
@@ -76,7 +120,7 @@ https://cdn.jsdelivr.net/gh/zesty-io/live-editor@latest/dist/live-editor.product
 
 Zesty is an application that can make any website or text base document on the internet editable. It runs as javascript application and is powered by a Zesty's multi-tenant cloud based API. It would by piping any directing any live domain with a website through WebEngine. Webengine serves the application through and inject content with Parsley, a templating language that connects to the the Zesty API.
 
-## Design
+##💡 Design
 
 Figma file https://www.figma.com/file/TsOMa4gbWHgMzWyXH8MXpt/Explorer?node-id=0%3A1
 
@@ -84,9 +128,9 @@ Figma file https://www.figma.com/file/TsOMa4gbWHgMzWyXH8MXpt/Explorer?node-id=0%
 
 A domain is pointed to Zesty Webengine, and the Zesty Overlay Editor is injected into the page when it renders. The overlay tool lets the user select portions of the page they need to edit, and also gives the user the option to add sections into the page. This is made possible by storing a document which HTML markup and Parlsey is written to. When the document is served, WebEngine will render it by processing and compiling Parsley into a final web document, injecting SEO and webpage needed functionality.
 
-### Tools in the WebSite Overlay tool
+### 💡 Tools in the WebSite Overlay tool
 
-## Content
+## 💡 Content
 
 A tablar view of the content editable on the page, when an item is selected, it scrolls you the approate area, highlights it on page, and allows the user to change and save the page. When the content view is selected, a user may select an area on page where they would like to edit contnet, or add a new block to the page (like a image and text block).
 
@@ -121,55 +165,21 @@ Zesty Overlay using the Rest API (instances-api) to write both content and files
 
 A view of the pages SEO and meta values which can be edited, this is not limited to SEO meta tags, but open graph tags, scripts, and other head tags. Head tags are injected into the page though WebEngine, prior to Search Engines reading it.
 
-# How to run locally
+## 💡 How to run locally
 
-Edit the hostfile in linux or MacOs
+Check <a href="https://github.com/zesty-io/live-editor/blob/development/CONTRIBUTING.md#quickstart-local-frontend-development">here</a> on how to run locally</a>
 
-```jsx
-sudo vim /etc/hosts
-```
+## 💡 How to Commit
 
-then add the line
+Check <a href="https://github.com/zesty-io/live-editor/blob/development/CONTRIBUTING.md#Using-the-Project's-Standard-Commit Messages">here</a>
 
-```jsx
-127.0.0.1 test.zesty.io
-```
+## 💡 Deploying in Production
 
-Clone the Zesty Live-Editor and Zesty Chrome Extension on same folder :
+### Automated
 
-```jsx
-git clone https://github.com/zesty-io/live-editor.git
-```
+-  All successfull merge to main will create a release and publish to npm
 
-```jsx
-git clone https://github.com/zesty-io/chrome-ext.git
-```
-
-on the Zesty Chrome Extension Directory run
-
-Chrome Extension Repo https://github.com/zesty-io/chrome-ext
-
-```jsx
-git checkout development
-```
-
-then install the extension locally [here](https://webkul.com/blog/how-to-install-the-unpacked-extension-in-chrome/)
-
-after that change directory to the Zesty Live-editor folder then run the following command
-
-```jsx
-git checkout development && npm install && npm start
-```
-
-assuming the extension is already installed go to a zesty domain website ex `https://www.zesty.io/` the double click the zesty chrome extension to run it.
-
-# How to Commit
-
-```jsx
-npm run commit
-```
-
-# Deploying in Production
+### Manually
 
 ```jsx
 git checkout main && npm run release
@@ -177,7 +187,11 @@ git checkout main && npm run release
 
 ## Testing Locally in the browser
 
--  run `npm start` to start the application locally
+-  run `npm run dev` to start the application locally
 -  Open /test/index.html in your browser
 -  Remove index.html from the browser file path
 -  use this override domain `https://qzp3zx5t-dev.webEngine.zesty.io/`
+
+## 🖥️ Code Contributors
+
+  <img src ="https://contrib.rocks/image?repo=zesty-io/live-editor"/>

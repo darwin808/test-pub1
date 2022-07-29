@@ -1,5 +1,5 @@
 import React from "react"
-import ReactJson from "react-json-view-ssr"
+import ReactJson from "react-json-view"
 import { SearchAppBar, Subheaders } from "components"
 import { Box } from "@mui/material"
 interface Props {
@@ -25,7 +25,7 @@ export const JsonDataViewerTab = ({
          <SearchAppBar value={search} onChange={setSearch} />
          <ReactJson
             style={{
-               height: "70vh",
+               height: "68vh",
                overflowY: "scroll",
                fontSize: "14px !important",
                fontFamily: "Mulish",

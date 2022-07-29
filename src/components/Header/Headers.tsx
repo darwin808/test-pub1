@@ -3,10 +3,11 @@ import { AppBar } from "@mui/material"
 import Box from "@mui/material/Box"
 import { useTheme } from "@mui/material/styles"
 import { TabContainer, CustomBtn } from "components"
-import { assets } from "constants/index"
+import { assets, baseUrls } from "constants/index"
 import Cookies from "js-cookie"
 import LoginIcon from "@mui/icons-material/Login"
 import LogoutIcon from "@mui/icons-material/Logout"
+import { authApi } from "services"
 interface Props {
    children: React.ReactNode
    content: any
@@ -37,6 +38,21 @@ const Index = ({
    const theme = useTheme()
    console.log(content, response)
 
+   const handleSuccess = (data: any) => {
+      console.log(data)
+   }
+   const handleError = (error: any) => {
+      console.log(error)
+   }
+
+   const url = baseUrls.auth + "/logout"
+
+   const handleLogout = async () => {
+      settime()
+      settoken("")
+      Cookies.remove("LOCAL_APP_SID")
+      await authApi({ url, token, handleError, handleSuccess })
+   }
    return (
       <AppBar
          sx={{
@@ -75,6 +91,7 @@ const Index = ({
                   tabList={tabList}
                   settime={settime}
                   token={token}
+                  isLocalContent={isLocalContent}
                />
             </Box>
 
@@ -93,7 +110,7 @@ const Index = ({
                         padding="5px 10px"
                         size="14px"
                         theme={theme}
-                        data-testid="localLoginBtn"
+                        testid="localLoginBtn"
                         onClick={() => setlocalLogin(true)}
                      >
                         <LoginIcon fontSize="inherit" titleAccess="Edit Now" />
@@ -105,11 +122,8 @@ const Index = ({
                         padding="5px 10px"
                         size="14px"
                         theme={theme}
-                        data-testid="localLogoutBtn"
-                        onClick={() => {
-                           settoken("")
-                           Cookies.remove("LOCAL_APP_SID")
-                        }}
+                        testid="localLogoutBtn"
+                        onClick={handleLogout}
                      >
                         <LogoutIcon fontSize="inherit" titleAccess="Edit Now" />
                         Logout
