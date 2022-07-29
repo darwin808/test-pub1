@@ -130,7 +130,7 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
 
    if (
       !isContentAvailable ||
-      jsonData?.error ||
+      jsonData?.error === true ||
       pageData?.error ||
       jsonData?.data === null ||
       Object.keys(jsonData)?.length === 0
