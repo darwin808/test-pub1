@@ -26,7 +26,7 @@ jobs:
            run: |
               git add .
               git commit --allow-empty -m "chore(app):bump version"
-              git push origin version-branch:stage
+              git push origin version-branch:main
          # Create Release
          - name: Release
            uses: justincy/github-action-npm-release@2.0.2
