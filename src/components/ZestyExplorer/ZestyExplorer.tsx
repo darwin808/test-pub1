@@ -85,7 +85,7 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
                setPageData(content)
             }
          })
-   }, [])
+   }, [isContentAvailable])
 
    React.useEffect(() => {
       !isContentAvailable && fetchJsonData()
@@ -129,11 +129,11 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
    }
 
    if (
-      !isContentAvailable
-      // jsonData?.error ||
-      // pageData?.error ||
-      // jsonData?.data === null ||
-      // Object.keys(jsonData)?.length === 0
+      !isContentAvailable ||
+      jsonData?.error ||
+      pageData?.error ||
+      jsonData?.data === null ||
+      Object.keys(jsonData)?.length === 0
    ) {
       return (
          <Box sx={verifyUserPrompt} zIndex={2147483647}>
