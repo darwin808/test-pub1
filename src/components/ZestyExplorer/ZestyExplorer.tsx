@@ -48,27 +48,18 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
    const fetchJsonData = async () => {
       console.log("run1 jsjon::::")
       setloading(true)
-      const res = await fetchJSON(jsonUrl, setJsonData, secretKey, setloading)
+      const res = await fetchJSON(jsonUrl, setJsonData, token, setloading)
       res && handleJSONData(res)
    }
 
    const getData = async () => {
       if (!isContentAvailable) {
          console.log("run2 jsjon::::")
-         const { data, response } = await getPageData(secretKey)
+         const { data, response } = await getPageData(token)
          data && setPageData(data)
          response && setResponse(response)
       }
    }
-
-   // token switcher
-   // React.useEffect(() => {
-   //    if (isContentAvailable && LOCAL_DOMAINS.includes(window.location.hostname)) {
-   //       settoken(Cookies.get("LOCAL_APP_SID"))
-   //    } else {
-   //       settoken(helper.getUserAppSID)
-   //    }
-   // }, [isContentAvailable, secretKey])
 
    // token switcher
    React.useEffect(() => {
@@ -80,10 +71,11 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
          settoken(helper.getUserAppSID)
       }
    }, [isContentAvailable, secretKey])
+
    // check if content is available
    React.useEffect(() => {
       const fetchJsonData = async () => {
-         const res = await fetchJSON(jsonUrl, setJsonData, secretKey, setloading)
+         const res = await fetchJSON(jsonUrl, setJsonData, token, setloading)
          res && setJsonData(res)
          console.log("run3 jsjon::::")
       }
