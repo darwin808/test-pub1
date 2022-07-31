@@ -38,7 +38,7 @@ export const NavigatorTab = ({
    const fetchJsonData = async () => {
       // setloading(true)
       const res = await fetchJSON(url, setdata, token, setloading)
-      res && handleJsonData(res.data)
+      res && handleJsonData(res?.data)
    }
 
    const options = {
@@ -53,12 +53,12 @@ export const NavigatorTab = ({
       keys: ["title", "uri", "path_part", "url"],
    }
 
-   const fuse = new Fuse(data, options)
-   const result = fuse.search(search)
+   const fuse = data && new Fuse(data, options)
+   const result = fuse?.search(search)
 
    React.useEffect(() => {
       if (isLocalContent) {
-         setdata(content?.navigationTree)
+         setdata(content?.navigationTree || content?.zestyNavigationTree)
       }
       if (!isLocalContent && data?.length === 0) {
          fetchJsonData()

@@ -36,22 +36,13 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
    const [response, setResponse] = React.useState<any>("")
    const [themeMode, themeToggler, mountedComponent] = useDarkMode()
    const [loading, setloading] = React.useState(false)
-   const [isContentAvailable, setisContentAvailable] = React.useState(false)
-
-   // const isContentAvailable = Object.keys(content).length !== 0 ? true : false
+   console.log(themeMode, mountedComponent)
+   const isContentAvailable = Object.keys(content).length !== 0 ? true : false
    // const token = localToken || secretKey || helper.getUserAppSID()
    const handleJSONData = (res: JsonData) => {
       setJsonData(res)
       setloading(false)
    }
-
-   React.useEffect(() => {
-      if (Object.keys(content).length !== 0) {
-         setisContentAvailable(true)
-      } else {
-         setisContentAvailable(false)
-      }
-   }, [content])
 
    // get json data
    const fetchJsonData = async () => {
@@ -95,7 +86,7 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
                setPageData(content)
             }
          })
-   }, [isContentAvailable])
+   }, [])
 
    React.useEffect(() => {
       !isContentAvailable && fetchJsonData()
@@ -137,9 +128,9 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
          </Box>
       )
    }
-
    if (
       jsonData?.error ||
+      pageData?.error ||
       jsonData?.data === null ||
       Object.keys(jsonData)?.length === 0
    ) {
@@ -154,22 +145,6 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
       )
    }
 
-   console.log(
-      isContentAvailable,
-      jsonData?.error,
-      pageData?.error,
-      jsonData?.data === null,
-      Object.keys(jsonData)?.length === 0,
-      "44::",
-   )
-   console.log(
-      isContentAvailable,
-      jsonData,
-      pageData,
-      themeMode,
-      mountedComponent,
-      "23:::123::",
-   )
    return (
       <Box id={"zestyExplorer"} data-testid="zestyExplorerMain" sx={zestyWrapper}>
          <Helmet>

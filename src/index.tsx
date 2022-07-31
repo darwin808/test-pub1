@@ -4,14 +4,15 @@ import { createZestyDiv } from "utils"
 import * as helper from "utils/index"
 // import { dummydata } from "constants"
 import { render } from "react-dom"
+// import { dummy2, dummydata } from "constants"
 
-// if (process.env.NODE_ENV === "production") {
-//    console.log = () => {}
-//    console.error = () => {}
-//    console.debug = () => {}
-// }
+if (process.env.NODE_ENV === "production") {
+   console.log = () => {}
+   console.error = () => {}
+   console.debug = () => {}
+}
 
-console.log(" 123********** Zesty live editor loaded v1 ************ ")
+console.log(" ********** Zesty live editor loaded v1 ************ ")
 
 export const ZestyLiveEditor = (content?: any) => {
    if (!helper.canUseDOM()) {
