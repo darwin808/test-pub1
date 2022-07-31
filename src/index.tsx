@@ -6,11 +6,11 @@ import * as helper from "utils/index"
 import { render } from "react-dom"
 // import { dummy2, dummydata } from "constants"
 
-if (process.env.NODE_ENV === "production") {
-   console.log = () => {}
-   console.error = () => {}
-   console.debug = () => {}
-}
+// if (process.env.NODE_ENV === "production") {
+//    console.log = () => {}
+//    console.error = () => {}
+//    console.debug = () => {}
+// }
 
 console.log(" ********** Zesty live editor loaded v1 ************ ")
 
