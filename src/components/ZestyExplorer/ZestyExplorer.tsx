@@ -106,6 +106,19 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
       await fetchJsonData()
    }
 
+   React.useEffect(() => {
+      console.log(
+         jsonData,
+         pageData,
+
+         jsonData?.error ||
+            pageData?.error ||
+            jsonData?.data === null ||
+            Object.keys(jsonData)?.length === 0,
+         "pooooooooooooooooooooooooooooooo",
+      )
+   }, [jsonData, pageData])
+
    if (!helper.canUseDOM()) {
       return null
    }
@@ -145,15 +158,6 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
       )
    }
 
-   console.log(
-      jsonData,
-      pageData,
-
-      jsonData?.error ||
-         pageData?.error ||
-         jsonData?.data === null ||
-         Object.keys(jsonData)?.length === 0,
-   )
    return (
       <Box id={"zestyExplorer"} data-testid="zestyExplorerMain" sx={zestyWrapper}>
          <Helmet>
