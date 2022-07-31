@@ -62,14 +62,24 @@ export const ZestyExplorer = ({ content = {} }: ZestyExplorerProps) => {
    }
 
    // token switcher
+   // React.useEffect(() => {
+   //    if (isContentAvailable && LOCAL_DOMAINS.includes(window.location.hostname)) {
+   //       settoken(Cookies.get("LOCAL_APP_SID"))
+   //    } else {
+   //       settoken(helper.getUserAppSID)
+   //    }
+   // }, [isContentAvailable, secretKey])
+
+   // token switcher
    React.useEffect(() => {
       if (isContentAvailable && LOCAL_DOMAINS.includes(window.location.hostname)) {
          settoken(Cookies.get("LOCAL_APP_SID"))
+      } else if (secretKey) {
+         settoken(secretKey)
       } else {
          settoken(helper.getUserAppSID)
       }
    }, [isContentAvailable, secretKey])
-
    // check if content is available
    React.useEffect(() => {
       const fetchJsonData = async () => {
