@@ -69,10 +69,11 @@ export const ZestyExplorerBrowser = ({
    }
    // ????????????????
    React.useEffect(() => {
-      console.log(instances, views, models, jsonData, "datas")
+      console.log(url, instances, views, models, jsonData, "datas")
    }, [instances, models, views, jsonData])
 
    React.useEffect(() => {
+      getFinalData()
       if (!isLocalContent) {
          getFinalData()
       }
