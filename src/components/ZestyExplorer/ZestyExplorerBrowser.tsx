@@ -51,7 +51,9 @@ export const ZestyExplorerBrowser = ({
    const userAppSID = token
    const itemZUID = jsonData?.data?.meta?.zuid
    const modelZUID = jsonData?.data?.meta?.model?.zuid
-   const instanceZUID = helper.headerZUID(jsonData.res)
+   const instanceZUID = isLocalContent
+      ? helper.headerZUID(response)
+      : helper.headerZUID(jsonData.res)
 
    // get the instance view models  on initial load
    const { loading, verifyFailed, verifySuccess, instances, views, models } =
@@ -67,7 +69,7 @@ export const ZestyExplorerBrowser = ({
    }
    // ????????????????
    React.useEffect(() => {
-      console.log(url, instances, views, models, jsonData, "datas")
+      console.log(response, url, instances, views, models, jsonData, "datas")
    }, [instances, models, views, jsonData])
 
    React.useEffect(() => {
