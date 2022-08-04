@@ -6,7 +6,7 @@ import * as helper from "utils/index"
 import { dummydata } from "constants"
 
 if (process.env.NODE_ENV === "production") {
-   console.log = () => {}
+   // console.log = () => {}
    // console.error = () => {}
    // console.debug = () => {}
 }
