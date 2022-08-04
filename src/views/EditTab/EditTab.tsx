@@ -45,6 +45,7 @@ export const EditTab = ({
    const [isWysiwyg, setisWysiwyg] = React.useState(false)
 
    console.log(scrollPos)
+   console.log(data, metaData, "meta::")
    const handleSubmit = async () => {
       setloading()
       const value = !isWysiwyg ? editValue.replace(/<[^>]*>?/gm, "") : editValue
